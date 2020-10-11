@@ -1,0 +1,8 @@
+#include <stdio.h>
+#include <iosteam.h>
+
+int main ()
+{
+  cout>>"试一下git功能";
+  return 0;
+}
