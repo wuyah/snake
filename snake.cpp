@@ -1,5 +1,5 @@
-#include "snake.h"
-
+#include "Food.h"
+#include"snake.h"
 
 
 ////////////////////////////////////////////////////gouzaohanshu 
@@ -7,22 +7,24 @@ Snake::Snake()
 {
 	SnakeBody* node1 = new SnakeBody;
 	node1->next = NULL; node1->pre = NULL;
-	node1->x = 132; node1->y = 132;
+	node1->x = 320; node1->y = 320;
 	SnakeBody * node2 = new SnakeBody;
 	node2->next = node1; node1->pre = node2; node2->pre = NULL;
-	node2->x = 116; node2->y = 132;
+	node2->x = 352; node2->y = 320;
 	SnakeBody * node3 = new SnakeBody;
 	node3->next = node2; node2->pre = node3; node3->pre = NULL;
-	node3->x = 100; node3->y = 132;
+	node3->x = 384; node3->y = 320;
 
 	head = node3; tail = node1;
 	len = 2;
 	direction = Dir_left;//构造长度为三的身体
 }
 void Snake::Move(Snake &snake) {
-	Node nend;
+	SnakeBody nend;
 	nend.x = tail->x;
 	nend.y = tail->y;
+	nend.next = tail->next;
+	nend.pre = tail->pre;
 
 	switch (direction) {
 	case Dir_up:
@@ -57,18 +59,9 @@ void Snake::Move(Snake &snake) {
 		node->y = node->pre->y;
 		node=node->pre;
 	}
-
 	clearsnakenode(nend);
 }
-void Snake::eatfood(int x,int y) {
-	SnakeBody* Head = new  SnakeBody;
-	Head->x = x; Head->y = y;
-	Head->next = head;
-	head->pre = Head;
-	Head->pre = NULL;
-	head = Head;
-	++len;
-}
+
 void Snake::Chdir() {
 	char ch;
 	if (_kbhit() ){
@@ -100,26 +93,27 @@ void Snake::drawsnakebody(Node node)
 {
 	setfillcolor(RED);
 	setfillstyle(BS_SOLID);
-	solidrectangle(node.x - 8, node.y + 8, node.x + 8, node.y - 8);
+	solidrectangle(node.x - 7, node.y + 7, node.x + 7, node.y - 7);
 }
 void Snake::drawsnakehead(Node node) {
 	setfillcolor(RED);
 	setfillstyle(BS_SOLID);
-	solidrectangle(node.x - 8, node.y + 8, node.x + 8, node.y - 8);
+	solidrectangle(node.x - 7, node.y + 7, node.x + 7, node.y - 7);
 }
 
 void Snake::drawall(Snake snake) {
 
 	SnakeBody *linknode = snake.head;
-	drawsnakehead(*linknode);//画头部
+
 	linknode = linknode->next;
+	drawsnakebody(*linknode);
 
 	while (linknode != snake.tail->next)
 	{
 		drawsnakebody(*linknode);
 		linknode = linknode->next; 
 	}
-	
+	drawsnakebody(*snake.tail);
 
 
 }
@@ -138,6 +132,33 @@ void Snake::clearsnakenode(Node node)
 }
 
 
-void insert() {
+void Snake::eatfood(int x,int y) {
+	SnakeBody* nodes = (SnakeBody*)malloc(sizeof(Node));
+	nodes->x = x;
+	nodes->y = y;
+	nodes->next = tail->next;
+	nodes->pre = tail;
+	tail->next = nodes;
+	tail = nodes;
+	len++;
+}
 
+bool Snake::collidefood(int x,int y) {
+	bool collide = false;
+	if ((head->x==x)&&(head->y==y)) {
+		collide = true;
+	}
+	return collide;
+}
+bool Snake::collidesnake(const Snake snake) {
+	Node *node = snake.head;
+	bool collide =false;
+	while (node != snake.tail->next) {
+		if (node->x == snake.head->x&&node->y == snake.head->y) {
+			collide = true;
+			break;
+		}
+		node = node->next;
+		return collide;
+	}
 }

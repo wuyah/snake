@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include<iostream>
+#include"Food.h"
 
 
 enum Direction { Dir_up = 1, Dir_right = 2, Dir_down = 3, Dir_left = 4 };//fangxiangcanshu
@@ -30,17 +31,17 @@ private:
 
 
 public:
+	friend class Food;
 	Snake();
 	void Move(Snake&snake);
 	//int getlen();
-	void eatfood(int x,int y );
 	void Chdir();//改变方向
 	void drawsnakebody(Node node);
 	void drawsnakehead(Node node);
-	//bool collidesnake(const Snake snake);   //碰撞自身检测
-	//bool collidefood(const Snake snake);
+	bool collidesnake(const Snake snake);   //碰撞自身检测
+	bool collidefood(int x,int y);
 	void drawall(Snake snake);
 	void coversnake(Node &node);
 	void clearsnakenode(Node node);
-	void eatfood();
+	void eatfood(int x,int y);
 };
