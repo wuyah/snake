@@ -32,16 +32,26 @@ private:
 
 public:
 	friend class Food;
+	friend class Dilei;
+	friend class Kusa;
 	Snake();
 	void Move(Snake&snake);
 	//int getlen();
 	void Chdir();//改变方向
 	void drawsnakebody(Node node);
 	void drawsnakehead(Node node);
+	void drawall(Snake snake);
+	void clearsnakenode(Node node);
+
+
 	bool collidesnake(const Snake snake);   //碰撞自身检测
 	bool collidefood(int x,int y);
-	void drawall(Snake snake);
-	void coversnake(Node &node);
-	void clearsnakenode(Node node);
-	void eatfood(int x,int y);
+	bool collidewall();
+	
+	void eatfood(int x,int y);//吃东西
+	void eatkusa();//吃雷
+	void dead();
+	void snakecutoff();
+
+
 };

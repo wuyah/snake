@@ -1,5 +1,4 @@
 #include"Food.h"
-#include"snake.h"
 #include<time.h>
 #include<stdlib.h>
 #include<graphics.h>
@@ -7,18 +6,20 @@
 
 Food::Food()
 {
+	srand((int)time(0));
+
 	m_x = -1;
 	m_y = -1;
 	m_state = false;
 }
-void Food::creatfood( Snake *snake) {
+void Food::creatfood(Snake *snake,Kusa kusa[], int number) {
 	int x;
 	int y;
+	Kusa *kusap = &kusa[number];
 	while (!m_state)
 	{
-		srand((int)time(0));
-		x = (rand() % 12)*32+32;
-		y = (rand() % 12)*32+32;
+		x = (rand() % 27)*16+32;
+		y = (rand() % 27)*16+32;
 		SnakeBody*node = snake->head;
 		bool cont = true;
 		while (node != snake->tail->next)
@@ -30,6 +31,7 @@ void Food::creatfood( Snake *snake) {
 			}
 			node = node->next;
 		}
+		cont = avoidkusa(x, y, number, kusap);
 		if (cont)
 		{
 			break;
@@ -41,6 +43,19 @@ void Food::creatfood( Snake *snake) {
 		drawfood();
 	}
 
+bool Food::avoidkusa(int x,int y,int number,Kusa kusa[]) {
+	bool cont = true;
+
+	for (int i = 0; i <= number; i++) {
+		int kusax =kusa[i].kusa_x;
+		int kusay = kusa[i].kusa_y;
+		if (x == kusax && y == kusay) {
+			cont = false;
+			break;
+		}
+	}
+	return cont;
+}
 
 
 void Food::drawfood() {
