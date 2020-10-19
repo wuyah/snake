@@ -1,5 +1,6 @@
 #include "kusa.h"
 
+
 Kusa::Kusa() {
 	srand((int)time(0));
 	kusa_x = -1;
@@ -40,3 +41,4 @@ void Kusa::drawkusa() {
 	setfillstyle(BS_SOLID);
 	solidcircle(kusa_x, kusa_y ,6);
 }
+

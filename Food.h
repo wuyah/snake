@@ -1,6 +1,6 @@
 #pragma once
 #include"snake.h"
-#include "kusa.h"
+#include"kusa.h"
 struct Point
 {
 	int x;
@@ -18,8 +18,10 @@ private:
 	friend class Kusa;
 public:
 	Food();
-	void creatfood(Snake *snake,Kusa kusa[],int number);
+	void creatfood(Snake *snake,Kusa *kusa,int number);
+	void creatfood2(Snake *snake, Kusa *kusa, int number);
 	void drawfood();
+	void drawfood2();
 	Point getpoint(Food food) {
 		Point getf;
 		getf.x = m_x;
@@ -29,5 +31,5 @@ public:
 	void clearfood();
 	bool exist();
 	void beeaten();
-	bool avoidkusa(int x,int y,int number,Kusa kusa[]);
+	bool avoidkusa(int x,int y,int number,Kusa *kusa);
 };

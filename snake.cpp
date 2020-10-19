@@ -1,7 +1,5 @@
-#include "Food.h"
 #include"snake.h"
-
-
+#include"kusa.h"
 ////////////////////////////////////////////////////gouzaohanshu 
 Snake::Snake() 
 {
@@ -62,32 +60,37 @@ clearsnakenode(nend);
 }
 //变个方向
 
-void Snake::Chdir() {
-	char ch;
-	if (_kbhit()) {
-		ch = _getch();
+void Snake::Chdir(char ch) {
+	
 		switch (ch) {
-		case'w':if ((direction != Dir_down) && (direction != Dir_up)) {
+		case'w':
+			if ((direction != Dir_down) && (direction != Dir_up)) {
 			direction = Dir_up;
 		}break;
-		case's':if ((direction != Dir_down) && (direction != Dir_up)) {
+		case's':
+			if ((direction != Dir_down) && (direction != Dir_up)) {
 			direction = Dir_down;
-		}break;
-		case'a':if ((direction != Dir_right) && (direction != Dir_left)) {
+		}
+			break;
+		case'a':
+			if ((direction != Dir_right) && (direction != Dir_left)) {
 			direction = Dir_left;
-		}break;
-		case'd':if ((direction != Dir_right) && (direction != Dir_left)) {
+		}
+			break;
+		case'd':
+			if ((direction != Dir_right) && (direction != Dir_left)) {
 			direction = Dir_right;
 		}break;
 		}
 		return;
-	}
-	else return;
-
-
-
-
+	
 }
+
+int Snake::getlen() {
+	return len;
+}
+
+
 
 //--------------画画-----------------------
 
@@ -141,6 +144,7 @@ void Snake::eatkusa() {
 	delete tail;
 	tail = lnode;
 	tail->next = nullptr;
+	len--;
 }
 
 void Snake::snakecutoff() {
@@ -152,7 +156,6 @@ void Snake::snakecutoff() {
 		for (int i = 1; i <= lenth / 2; i++) {
 
 			eatkusa();
-			len--;
 		}
 	}
 }
@@ -181,6 +184,22 @@ bool Snake::collidesnake(const Snake snake) {
 	}
 	return collide;
 }//碰撞检测
+bool Snake::collidekusa(Kusa * kusap,int number) {
+	bool collide = false;
+	for (int i = 0; i <= number; i++) {
+		int x = kusap->kusa_x;
+		int y = kusap->kusa_y;
+		if ((head->x == x) && (head->y == y)) {
+			collide = true;
+			kusap->kusa_x = -1;
+			kusap->kusa_y = -1;
+			break;
+		}
+		kusap++;
+	}
+	return collide;
+}
+
 bool Snake::collidewall(){
 	Node*node = head;
 	bool collide = false;

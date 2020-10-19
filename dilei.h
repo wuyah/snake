@@ -1,7 +1,6 @@
 #pragma once
-
-#include"Food.h"
-
+#include"snake.h"
+#include"kusa.h"
 class Dilei {
 public:
 	friend class snake;
@@ -11,6 +10,7 @@ public:
 	bool lei_state;
 	Dilei();
 	void leibeeaten();
-	void creatlei(int x,int y,Snake *snake);//生成地雷
+	void creatlei(int x,int y,Snake *snake, Kusa* kusap, int number);//生成地雷
 	void drawlei();
+	bool avoidkusa(int x, int y, int number, Kusa* kusap);
 };

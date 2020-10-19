@@ -1,5 +1,5 @@
 #pragma once
-#include"dilei.h"
+#include"snake.h"
 enum kusanum
 {
 	kusanum_1 = 10,kusanum_2=15,kusanum_3=20
@@ -12,6 +12,5 @@ public:
 	int kusa_y;
 	void drawkusa();
 	void creatkusa(Snake* snake);
-
 };
 

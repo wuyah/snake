@@ -8,12 +8,8 @@ Dilei::Dilei() {
 	lei_state = false;
 }
 
-void Dilei::drawlei() {
-	setfillcolor(RGB(138,42,246));
-	setfillstyle(BS_SOLID);
-	solidcircle(lei_x, lei_y, 6);
-}
-void Dilei::creatlei(int f_x,int f_y,Snake *snake) {
+
+void Dilei::creatlei(int f_x,int f_y,Snake *snake,Kusa* kusa,int number) {
 	int x;
 	int y;
 	while (!lei_state)
@@ -35,9 +31,9 @@ void Dilei::creatlei(int f_x,int f_y,Snake *snake) {
 			}
 			node = node->next;
 		}
-		if (cont)
+		bool cont1= avoidkusa(x, y, number, kusa);
+		if (cont&&cont1)
 		{
-			
 			break;
 		}
 	}
@@ -51,3 +47,23 @@ void Dilei::leibeeaten() {
 	lei_state = false;
 }
 
+bool Dilei::avoidkusa(int x, int y, int number, Kusa *kusap) {
+	bool cont = true;
+	
+	for (int i = 0; i <= number; i++) {
+		int kusax = kusap->kusa_x;
+		int kusay = kusap->kusa_y;
+		if (x == kusax && y == kusay) {
+			cont = false;
+			break;
+		}
+		kusap++;
+	}
+	return cont;
+}
+
+void Dilei::drawlei() {
+	setfillcolor(RGB(138, 42, 246));
+	setfillstyle(BS_SOLID);
+	solidcircle(lei_x, lei_y, 6);
+}
